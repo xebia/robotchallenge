@@ -1,7 +1,7 @@
 /* dependencies */
 var mbot = require("../mbotlayout");
 var five = require("johnny-five");
-var lineSensor = require("./linesensor");
+var followLine = require("./followline");
 
 /* private variables */
 var isActive;
@@ -9,7 +9,9 @@ const PieInYourPantstolerance = 2;
 const turnOnLightTolerance = 4;
 
 var sensorChange = function(value, robot) {
+  //console.log('sensing: ' + value);
   if (!isActive) return;
+  console.log('sensing: ' + value);
 
   if (value < turnOnLightTolerance) {
     console.log('This is getting too dark for me.');
@@ -21,7 +23,7 @@ var sensorChange = function(value, robot) {
 
   if (value < PieInYourPantstolerance) {
     console.log('I.. a...m... scared...');
-    lineSensor.deactivate();
+    followLine.deactivate();
     robot.move(0,0);
   }
 }

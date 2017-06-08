@@ -1,8 +1,8 @@
 /* dependencies */
 var mbot = require("../mbotlayout");
 var five = require("johnny-five");
-var lineSensor = require("./linesensor");
-var lightSensor = require("./lightsensor");
+var followLine = require("./followline");
+var automatedLight = require("./automatedlight");
 
 /* private variables */
 var isActive;
@@ -12,8 +12,8 @@ var sensorChange = function(value, robot) {
   if (!isActive) return;
 
   if (value < closeRange) {
-    lineSensor.deactivate();
-    lightSensor.deactivate();
+    followLine.deactivate();
+    automatedLight.deactivate();
     robot.stop();
     isActive = false;
     robot.celebrate();

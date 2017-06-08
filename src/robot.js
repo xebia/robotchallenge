@@ -7,6 +7,7 @@ function Robot(board) {
   this.board = board;
   this.isActive = false;
   this.lightStatus = false;
+  this.celebrating;
 
   this.activate = function() {
     this.board.info("Robot", "Activate");
@@ -17,6 +18,7 @@ function Robot(board) {
     this.leds = new pixel.Strip(mbotStrip);
     this.isActive = true;
     this.move(1,1);
+    this.turnOffLights();
   };
 
   this.getState = function() {
@@ -25,8 +27,8 @@ function Robot(board) {
 
   this.move = function(leftSpeed, rightSpeed) {
     if (this.getState()) {
-      this.left(leftSpeed);
-      this.right(rightSpeed);
+      //this.left(leftSpeed);
+      //this.right(rightSpeed);
     }
   };
 
@@ -75,12 +77,13 @@ function Robot(board) {
 
   this.turnOffLights = function() {
     this.lightStatus = false;
-    if (celebrating) {
-      clearInterval(celebrating);
+    if (this.celebrating) {
+      clearInterval(this.celebrating);
     }
+    var leds = this.leds;
     lightOnTimer = setTimeout(function() {
-      this.leds.color("#000");
-      this.leds.show();
+      leds.color("#000");
+      leds.show();
     },200);
   };
 

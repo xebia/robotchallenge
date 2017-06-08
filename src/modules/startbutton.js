@@ -1,9 +1,9 @@
 /* dependencies */
 var mbot = require("../mbotlayout");
 var five = require("johnny-five");
-var lineSensor = require("./linesensor");
-var lightSensor = require("./lightsensor");
-var distanceSensor = require("./distancesensor");
+var followLine = require("./followline");
+var automatedLight = require("./automatedlight");
+var finish = require("./finish");
 
 /* private variables */
 var isDisabled, isRobotRunning;
@@ -40,9 +40,9 @@ function disableButton(miliseconds) {
 }
 
 function startRobot(robot) {
-  lineSensor.activate();
-  lightSensor.activate();
-  distanceSensor.activate();
+  followLine.activate();
+  automatedLight.activate();
+  finish.activate();
   robot.activate();
   isRobotRunning = true;
   console.log("robot started");
@@ -50,9 +50,9 @@ function startRobot(robot) {
 
 function stopRobot(robot) {
   robot.stop();
-  lineSensor.deactivate();
-  lightSensor.deactivate();
-  distanceSensor.deactivate();
+  followline.deactivate();
+  automatedLight.deactivate();
+  finish.deactivate();
   robot.turnOffLights();
   isRobotRunning = false;
   console.log("stopped robot");
