@@ -1,13 +1,18 @@
 {
-  "name": "testmasterbot",
+  "name": "robotchallenge",
   "version": "0.0.1",
-  "description": "Testmasterbot, The most awesome purple bot you ever seen.",
-  "main": "index.js",
+  "description": "The robot challenge, Who will build the fastest purple bot?!",
+  "main": "app.js",
   "scripts": {
-    "test": "mocha",
-    "istanbull": "istanbul cover node_modules/.bin/cucumber.js",
-    "cucumber": "./node_modules/.bin/cucumber.js",
+    "unit-test": "mocha",
+    "acceptance-test": "cucumber-js",
+    "test": "npm run unit-test && npm run acceptance-test",
+    "coverage-unit": "istanbul cover --lcovonly --dir ./coverage/unit ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
+    "coverage-acceptance": "istanbul cover --lcovonly --dir ./coverage/acceptance ./node_modules/.bin/cucumber.js",
+    "coverage-merge": "istanbul-combine -d coverage -p summary -r lcov coverage/**/coverage.json",
+    "coverage": "npm run coverage-unit && npm run coverage-acceptance && npm run coverage-merge  && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage",
     "robot-mac": "node src/app.js /dev/tty.Makeblock-ELETSPP",
+    "robot-usb-mac": "node src/app.js",
     "robot-windows": "node src/app.js COMX"
   },
   "repository": {
@@ -17,9 +22,10 @@
   "keywords": [
     "Mbot",
     "TestMaster",
+    "RobotChallenge",
     "Xebia"
   ],
-  "author": "Xavier Viuda",
+  "author": "Fin Kingma",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/xebia/TestMasterBot/issues"
@@ -33,9 +39,12 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "codacy-coverage": "^2.0.0",
     "cucumber": "^0.10.2",
     "istanbul": "^0.4.5",
+    "istanbul-combine": "^0.3.0",
     "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.2.0",
     "mock-firmata": "0.0.7",
     "request": "^2.74.0",
     "sinon": "^1.17.5"
