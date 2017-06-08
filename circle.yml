@@ -1,0 +1,6 @@
+## Customize test commands
+test:
+  override:
+    - npm test
+  post:
+    - npm run cucumber

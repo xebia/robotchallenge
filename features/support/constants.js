@@ -1,0 +1,6 @@
+module.exports = {
+  NOLINESENSED: 1,
+  FINISHDISTANCE: 1.9,
+  GETTINGDARK: 2,
+  GETTINGLIGHT: 9
+}
