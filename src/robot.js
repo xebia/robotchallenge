@@ -4,13 +4,14 @@ const driveSpeed = 100;
 
 function Robot(board) {
   this.board = board;
-  this.leftMotor = new five.Motor(mbot.LEFT_MOTOR);
-  this.rightMotor = new five.Motor(mbot.RIGHT_MOTOR);
   this.isActive = false;
 
   this.activate = function() {
     this.board.info("Robot", "Activate");
+    this.leftMotor = new five.Motor(mbot.LEFT_MOTOR);
+    this.rightMotor = new five.Motor(mbot.RIGHT_MOTOR);
     this.isActive = true;
+    this.move(1,1);
   };
 
   this.getState = function() {
@@ -63,6 +64,7 @@ function Robot(board) {
 
   this.stop = function() {
     this.board.info("Robot", "Stop");
+    this.move(0,0);
     this.leftMotor.stop();
     this.rightMotor.stop();
     this.isActive = false;

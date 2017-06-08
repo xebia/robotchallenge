@@ -5,7 +5,6 @@ var lights = require("./lights");
 var lineSensor = require("./linesensor");
 var lightSensor = require("./lightsensor");
 var distanceSensor = require("./distancesensor");
-var wheels = require("./wheels");
 
 /* private variables */
 var isDisabled, isRobotRunning;
@@ -46,17 +45,12 @@ function startRobot(robot) {
   lightSensor.activate();
   distanceSensor.activate();
   robot.activate();
-  wheels.initialize();
-  wheels.left(1);
-  wheels.right(1);
   isRobotRunning = true;
   console.log("robot started");
 }
 
 function stopRobot(robot) {
   robot.stop();
-  wheels.left(0);
-  wheels.right(0);
   lineSensor.deactivate();
   lightSensor.deactivate();
   distanceSensor.deactivate();

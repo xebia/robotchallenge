@@ -19,8 +19,8 @@ board.on("ready", function(){
 
   lights.initialize(board);
   lineSensor.initialize(this.robot);
-  lightSensor.initialize();
-  distanceSensor.initialize();
+  lightSensor.initialize(this.robot);
+  distanceSensor.initialize(this.robot);
   startButton.initialize(this.robot);
 });
 
