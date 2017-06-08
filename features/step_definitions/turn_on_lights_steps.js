@@ -9,7 +9,7 @@ GETTINGLIGHT=9
 module.exports = function() {
   this.Given(/^the robot is traveling on the course in the dark$/, function (done) {
     this.clock.tick(2000);
-    this.startButton.click();
+    this.startButton.click(this.robot);
     this.lightSensor.sensorChange(this.constants.GETTINGLIGHT);
     done();
   });

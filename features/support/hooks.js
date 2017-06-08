@@ -2,31 +2,31 @@
 
 var myHooks = function () {
   this.Before(function (scenario) {
-    this.lights = require("../../src/robot/lights");
-    this.wheels = require("../../src/robot/wheels");
-    this.lineSensor = require("../../src/robot/linesensor");
-    this.lightSensor = require("../../src/robot/lightsensor");
-    this.distanceSensor = require("../../src/robot/distancesensor");
-    this.startButton = require("../../src/robot/startbutton");
+    var Robot = require("../../src/robot");
+    this.startButton = require("../../src/modules/startbutton");
+    this.followLine = require("../../src/modules/followline");
+    this.automatedLight = require("../../src/modules/automatedlight");
+    this.finish = require("../../src/modules/finish");
 
-    //constructing robot
-    this.lights.initialize(this.board);
-    this.wheels.initialize();
-    this.lineSensor.initialize();
-    this.lightSensor.initialize();
-    this.distanceSensor.initialize();
-    this.startButton.initialize();
+    this.robot = new Robot(this.board);
+    this.followLine.initialize(this.robot);
+    this.automatedLight.initialize(this.robot);
+    this.finish.initialize(this.robot);
+    this.startButton.initialize(this.robot);
 
     //specifying spies that are used in multiple specs
-    this.leftWheelSpy = this.sandbox.spy(this.wheels, "left");
-    this.rightWheelSpy = this.sandbox.spy(this.wheels, "right");
-    this.lightOnSpy = this.sandbox.spy(this.lights, "turnOnLights");
-    this.celebrateSpy = this.sandbox.spy(this.lights, "celebrate");
-    this.lightOffSpy = this.sandbox.spy(this.lights, "turnOffLights");
+    this.moveSpy = this.sandbox.spy(this.robot, "move");
+    this.leftWheelSpy = this.sandbox.spy(this.robot, "left");
+    this.rightWheelSpy = this.sandbox.spy(this.robot, "right");
+    this.moveForwardSpy = this.sandbox.spy(this.robot, "goForward");
+    this.stopSpy = this.sandbox.spy(this.robot, "stop");
+    this.lightOnSpy = this.sandbox.spy(this.robot, "turnOnLights");
+    this.celebrateSpy = this.sandbox.spy(this.robot, "celebrate");
+    this.lightOffSpy = this.sandbox.spy(this.robot, "turnOffLights");
   });
 
   this.After(function (scenario) {
-    this.lineSensor.deactivate();
+    this.followLine.deactivate();
     this.sandbox.restore();
   })
 };

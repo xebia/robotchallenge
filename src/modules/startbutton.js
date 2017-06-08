@@ -50,7 +50,7 @@ function startRobot(robot) {
 
 function stopRobot(robot) {
   robot.stop();
-  followline.deactivate();
+  followLine.deactivate();
   automatedLight.deactivate();
   finish.deactivate();
   robot.turnOffLights();

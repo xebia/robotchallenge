@@ -19,6 +19,7 @@ var clock = sinon.useFakeTimers();
 
 function World() {
   //specifying the world
+
   this.clock = clock;
   this.sinon = sinon;
   this.board = board;

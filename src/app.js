@@ -14,6 +14,6 @@ board.on("ready", function(){
 
   followLine.initialize(this.robot);
   automatedLight.initialize(this.robot);
-  //finish.initialize(this.robot);
+  finish.initialize(this.robot);
   startButton.initialize(this.robot);
 });

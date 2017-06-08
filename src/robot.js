@@ -17,7 +17,7 @@ function Robot(board) {
     mbotStrip.board = board;
     this.leds = new pixel.Strip(mbotStrip);
     this.isActive = true;
-    this.move(1,1);
+    this.goForward();
     this.turnOffLights();
   };
 
@@ -27,8 +27,8 @@ function Robot(board) {
 
   this.move = function(leftSpeed, rightSpeed) {
     if (this.getState()) {
-      //this.left(leftSpeed);
-      //this.right(rightSpeed);
+      this.left(leftSpeed);
+      this.right(rightSpeed);
     }
   };
 

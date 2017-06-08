@@ -8,7 +8,7 @@ module.exports = function() {
 
   this.Given(/^the robot is traveling on the course$/, function (done) {
     this.clock.tick(2000);
-    this.startButton.click();
+    this.startButton.click(this.robot);
     done();
   });
 }
