@@ -1,7 +1,6 @@
 /* dependencies */
 var mbot = require("../mbotlayout");
 var five = require("johnny-five");
-var lights = require("./lights");
 var lineSensor = require("./linesensor");
 var lightSensor = require("./lightsensor");
 
@@ -17,7 +16,7 @@ var sensorChange = function(value, robot) {
     lightSensor.deactivate();
     robot.stop();
     isActive = false;
-    lights.celebrate();
+    robot.celebrate();
   }
 }
 

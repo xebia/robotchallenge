@@ -1,7 +1,6 @@
 /* dependencies */
 var mbot = require("../mbotlayout");
 var five = require("johnny-five");
-var lights = require("./lights");
 var lineSensor = require("./linesensor");
 var lightSensor = require("./lightsensor");
 var distanceSensor = require("./distancesensor");
@@ -54,7 +53,7 @@ function stopRobot(robot) {
   lineSensor.deactivate();
   lightSensor.deactivate();
   distanceSensor.deactivate();
-  lights.turnOffLights();
+  robot.turnOffLights();
   isRobotRunning = false;
   console.log("stopped robot");
 }

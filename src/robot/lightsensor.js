@@ -1,7 +1,6 @@
 /* dependencies */
 var mbot = require("../mbotlayout");
 var five = require("johnny-five");
-var lights = require("./lights");
 var lineSensor = require("./linesensor");
 
 /* private variables */
@@ -14,9 +13,9 @@ var sensorChange = function(value, robot) {
 
   if (value < turnOnLightTolerance) {
     console.log('This is getting too dark for me.');
-    lights.turnOnLights();
+    robot.turnOnLights();
     setTimeout(function() {
-      lights.turnOffLights();
+      robot.turnOffLights();
     },2000);
   }
 

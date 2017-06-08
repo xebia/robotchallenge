@@ -1,15 +1,20 @@
 var mbot = require("./mbotlayout");
 var five = require("johnny-five");
+var pixel = require("node-pixel");
 const driveSpeed = 100;
 
 function Robot(board) {
   this.board = board;
   this.isActive = false;
+  this.lightStatus = false;
 
   this.activate = function() {
     this.board.info("Robot", "Activate");
     this.leftMotor = new five.Motor(mbot.LEFT_MOTOR);
     this.rightMotor = new five.Motor(mbot.RIGHT_MOTOR);
+    var mbotStrip = mbot.LEDS;
+    mbotStrip.board = board;
+    this.leds = new pixel.Strip(mbotStrip);
     this.isActive = true;
     this.move(1,1);
   };
@@ -50,17 +55,7 @@ function Robot(board) {
   this.goForward = function() {
     this.move(1,1);
     this.board.info("Robot", "Move forward");
-  };/*
-
-  this.goLeft = function() {
-    this.move(0,100);
-    this.board.info("Robot", "Move left");
   };
-
-  this.goRight = function() {
-    this.move(100,0);
-    this.board.info("Robot", "Move right");
-  };*/
 
   this.stop = function() {
     this.board.info("Robot", "Stop");
@@ -69,6 +64,54 @@ function Robot(board) {
     this.rightMotor.stop();
     this.isActive = false;
   };
+
+  this.turnOnLights = function() {
+    this.leds.color("#ffffff");
+    this.leds.show();
+    lightOnTimer = setTimeout(function() {
+      this.lightStatus = true;
+    },200);
+  };
+
+  this.turnOffLights = function() {
+    this.lightStatus = false;
+    if (celebrating) {
+      clearInterval(celebrating);
+    }
+    lightOnTimer = setTimeout(function() {
+      this.leds.color("#000");
+      this.leds.show();
+    },200);
+  };
+
+  this.celebrate = function() {
+    var fps = 10;
+
+    console.log("FINISH!");
+
+    var colors = ["red", "green", "blue", "yellow", "cyan", "magenta", "white"];
+    var current_colors = [0,1,2,3,4];
+    var current_pos = [0,1,2,3,4];
+    var leds = this.leds;
+    this.celebrating = setInterval(function() {
+
+      leds.color("#000"); // blanks it out
+
+      for (var i=0; i< current_pos.length; i++) {
+        if (++current_pos[i] >= leds.stripLength()) {
+          current_pos[i] = 0;
+          if (++current_colors[i] >= colors.length) current_colors[i] = 0;
+        }
+        leds.pixel(current_pos[i]).color(colors[current_colors[i]]);
+      }
+
+      leds.show();
+    }, 1000/fps);
+  };
+
+  this.lightStatus = function() {
+    return this.lightStatus;
+  }
 }
 
 module.exports = Robot;
