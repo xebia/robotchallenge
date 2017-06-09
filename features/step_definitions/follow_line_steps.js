@@ -16,10 +16,33 @@ module.exports = function() {
     done();
   });
 
-  this.When(/^the robot cant find the road on his right for (.*) seconds$/, function (seconds, done) {
+  /*this.When(/^the robot cant find the road on his right for (.*) seconds$/, function (seconds, done) {
     var lastCall = this.leftWheelSpy.callCount - 1;
     assert(parseInt(this.leftWheelSpy.args[lastCall]) > parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the right");
     this.clock.tick(seconds * 1000);
+    done();
+  });*/
+  this.When(/^the robot loses the track$/, function (done) {
+    this.followLine.sensorChange("left",this.constants.NOLINESENSED, this.robot);
+    this.followLine.sensorChange("right",this.constants.NOLINESENSED, this.robot);
+    done();
+  });
+
+  this.Then(/^the robot is able to find his way back on the track$/, function (done) {
+    var lastCall = this.leftWheelSpy.callCount - 1;
+    var firstLook; 
+    if (parseInt(this.leftWheelSpy.args[lastCall]) > parseInt(this.rightWheelSpy.args[lastCall])) {
+      firstLook = 'right';
+    } else {
+      firstLook = 'left'
+    }
+    this.clock.tick(2000);
+    lastCall = this.leftWheelSpy.callCount - 1;
+    if (firstLook === 'right') {
+      assert(parseInt(this.leftWheelSpy.args[lastCall]) < parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the right");
+    } else {
+      assert(parseInt(this.leftWheelSpy.args[lastCall]) > parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the right");
+    }
     done();
   });
 

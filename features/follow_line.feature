@@ -18,8 +18,7 @@ Feature: Follow line
     When the robot goes off the course of the left side
     Then the robot steers to the right
 
- Scenario: Robot cant find the track
+  Scenario: Robot cant find the track
     Given the robot is traveling on the course
-    And the robot goes off the course of the left side
-    When the robot cant find the road on his right for 2 seconds
-    Then the robot steers to the left
+    When the robot loses the track
+    Then the robot is able to find his way back on the track
