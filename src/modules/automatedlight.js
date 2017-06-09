@@ -9,9 +9,7 @@ const PieInYourPantstolerance = 2;
 const turnOnLightTolerance = 4;
 
 var sensorChange = function(value, robot) {
-  //console.log('sensing: ' + value);
   if (!isActive) return;
-  console.log('sensing: ' + value);
 
   if (value < turnOnLightTolerance) {
     console.log('This is getting too dark for me.');
