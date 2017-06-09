@@ -5,7 +5,7 @@ Feature: Control button
 
   Scenario: The robot starts traveling when the button is pressed
     Given the robot is standing still on the course
-    When I press the power button 
+    When I press the power button
     Then the robot starts going forward
 
   Scenario: The robot stops traveling when the button is pressed

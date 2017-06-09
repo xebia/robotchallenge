@@ -2,7 +2,7 @@ var assert = require("chai").assert;
 
 module.exports = function() {
   this.When(/^the robot encounters the finish bulls\-eye$/, function (done) {
-    this.distanceSensor.sensorChange(this.constants.FINISHDISTANCE);
+    this.finish.sensorChange(this.constants.FINISHDISTANCE, this.robot);
     done();
   });
   this.Then(/^the robot stops in the middle of the bulls\-eye$/, function (done) {

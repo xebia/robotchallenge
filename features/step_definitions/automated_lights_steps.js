@@ -10,15 +10,15 @@ module.exports = function() {
   this.Given(/^the robot is traveling on the course in the dark$/, function (done) {
     this.clock.tick(2000);
     this.startButton.click(this.robot);
-    this.lightSensor.sensorChange(this.constants.GETTINGLIGHT);
+    this.automatedLight.sensorChange(this.constants.GETTINGLIGHT, this.robot);
     done();
   });
   this.When(/^it turns dark$/, function (done) {
-    this.lightSensor.sensorChange(this.constants.GETTINGDARK);
+    this.automatedLight.sensorChange(this.constants.GETTINGDARK, this.robot);
     done();
   });
   this.When(/^it turns light$/, function (done) {
-    this.lightSensor.sensorChange(this.constants.GETTINGLIGHT);
+    this.automatedLight.sensorChange(this.constants.GETTINGLIGHT, this.robot);
     done();
   });
   this.Then(/^robot turns on it's lights$/, function (done) {

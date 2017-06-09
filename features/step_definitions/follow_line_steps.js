@@ -1,17 +1,25 @@
 var assert = require("chai").assert;
 
 module.exports = function() {
+
   this.When(/^the robot stays on track$/, function (done) {
     done();
   });
 
   this.When(/^the robot goes off the course of the right side$/, function (done) {
-    this.lineSensor.sensorChange("right",this.constants.NOLINESENSED);
+    this.followLine.sensorChange("right",this.constants.NOLINESENSED, this.robot);
     done();
   });
 
   this.When(/^the robot goes off the course of the left side$/, function (done) {
-    this.lineSensor.sensorChange("left",this.constants.NOLINESENSED);
+    this.followLine.sensorChange("left",this.constants.NOLINESENSED, this.robot);
+    done();
+  });
+
+  this.When(/^the robot cant find the road on his right for (.*) seconds$/, function (seconds, done) {
+    var lastCall = this.leftWheelSpy.callCount - 1;
+    assert(parseInt(this.leftWheelSpy.args[lastCall]) > parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the right");
+    this.clock.tick(seconds * 1000);
     done();
   });
 
@@ -23,18 +31,14 @@ module.exports = function() {
   });
 
   this.Then(/^the robot steers to the left$/, function (done) {
-    console.log('callcount: ' + this.leftWheelSpy.callCount);
-    assert(this.leftWheelSpy.callCount === 2, "left wheel expected to be called twice.");
-    assert(this.rightWheelSpy.callCount === 2, "right wheel expected to be called twice.");
-    assert(parseInt(this.leftWheelSpy.args[1]) < parseInt(this.rightWheelSpy.args[1]), "robot is not steering to the left")
+    var lastCall = this.leftWheelSpy.callCount - 1;
+    assert(parseInt(this.leftWheelSpy.args[lastCall]) < parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the left")
     done();
   });
 
   this.Then(/^the robot steers to the right$/, function (done) {
-    console.log('callcount: ' + this.leftWheelSpy.callCount);
-    assert(this.leftWheelSpy.callCount === 2, "left wheel expected to be called twice.");
-    assert(this.rightWheelSpy.callCount === 2, "right wheel expected to be called twice.");
-    assert(parseInt(this.leftWheelSpy.args[1]) > parseInt(this.rightWheelSpy.args[1]), "robot is not steering to the left")
+    var lastCall = this.leftWheelSpy.callCount - 1;
+    assert(parseInt(this.leftWheelSpy.args[lastCall]) > parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the right")
     done();
   });
 }
