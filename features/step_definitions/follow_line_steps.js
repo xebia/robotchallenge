@@ -16,12 +16,6 @@ module.exports = function() {
     done();
   });
 
-  /*this.When(/^the robot cant find the road on his right for (.*) seconds$/, function (seconds, done) {
-    var lastCall = this.leftWheelSpy.callCount - 1;
-    assert(parseInt(this.leftWheelSpy.args[lastCall]) > parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the right");
-    this.clock.tick(seconds * 1000);
-    done();
-  });*/
   this.When(/^the robot loses the track$/, function (done) {
     this.followLine.sensorChange("left",this.constants.NOLINESENSED, this.robot);
     this.followLine.sensorChange("right",this.constants.NOLINESENSED, this.robot);
