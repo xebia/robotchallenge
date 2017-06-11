@@ -27,15 +27,11 @@ module.exports = function() {
     var firstLook; 
     if (parseInt(this.leftWheelSpy.args[lastCall]) > parseInt(this.rightWheelSpy.args[lastCall])) {
       firstLook = 'right';
-    } else {
-      firstLook = 'left'
     }
     this.clock.tick(2000);
     lastCall = this.leftWheelSpy.callCount - 1;
     if (firstLook === 'right') {
       assert(parseInt(this.leftWheelSpy.args[lastCall]) < parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the right");
-    } else {
-      assert(parseInt(this.leftWheelSpy.args[lastCall]) > parseInt(this.rightWheelSpy.args[lastCall]), "robot is not steering to the right");
     }
     done();
   });

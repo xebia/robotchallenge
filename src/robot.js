@@ -44,7 +44,7 @@ function Robot(board) {
   };
 
   this.left = function(speed) {
-    if (speed > 1 || speed < -1) throw "supplied speed must be between -1 and 1";
+    if (speed > 1 || speed < -1) throw new Error("supplied speed must be between -1 and 1");
     if (speed == 0) {
       this.leftMotor.stop();
     } else if (speed > 0) {
@@ -55,7 +55,7 @@ function Robot(board) {
   };
 
   this.right = function(speed) {
-    if (speed > 1 || speed < -1) throw "supplied speed must be between -1 and 1";
+    if (speed > 1 || speed < -1) throw new Error("supplied speed must be between -1 and 1");
     if (speed == 0) {
       this.rightMotor.stop();
     } else if (speed > 0) {
@@ -123,10 +123,6 @@ function Robot(board) {
       leds.show();
     }, 1000/fps);
   };
-
-  this.lightStatus = function() {
-    return this.lightStatus;
-  }
 }
 
 module.exports = Robot;

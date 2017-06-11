@@ -10,7 +10,7 @@
     "coverage-unit": "istanbul cover --lcovonly --dir ./coverage/unit ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
     "coverage-acceptance": "istanbul cover --lcovonly --dir ./coverage/acceptance ./node_modules/.bin/cucumber.js",
     "coverage-merge": "istanbul-combine -d coverage -p summary -r lcov coverage/**/coverage.json",
-    "coverage": "npm run coverage-unit && npm run coverage-acceptance && npm run coverage-merge  && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage",
+    "coverage": "npm run coverage-unit && npm run coverage-acceptance && npm run coverage-merge  && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
     "robot-mac": "node src/app.js /dev/tty.Makeblock-ELETSPP",
     "robot-usb-mac": "node src/app.js",
     "robot-windows": "node src/app.js COMX"
