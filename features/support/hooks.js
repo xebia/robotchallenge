@@ -14,6 +14,8 @@ var myHooks = function () {
     this.finish.initialize(this.robot);
     this.startButton.initialize(this.robot);
 
+    this.robot.initialize(this.automatedLight,this.followLine,this.finish);
+
     //specifying spies that are used in multiple specs
     this.moveSpy = this.sandbox.spy(this.robot, "move");
     this.leftWheelSpy = this.sandbox.spy(this.robot, "left");
@@ -23,6 +25,7 @@ var myHooks = function () {
     this.lightOnSpy = this.sandbox.spy(this.robot, "turnOnLights");
     this.celebrateSpy = this.sandbox.spy(this.robot, "celebrate");
     this.lightOffSpy = this.sandbox.spy(this.robot, "turnOffLights");
+    this.followLineOffSpy = this.sandbox.spy(this.followLine, "deactivate");
   });
 
   this.After(function (scenario) {

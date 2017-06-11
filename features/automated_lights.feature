@@ -12,3 +12,8 @@ Feature: Turn on lights
     Given the robot is traveling on the course in the dark
     When it turns light
     Then robot turns off it's lights
+
+  Scenario: When it gets too dark for the robot, the robot deactivates
+    Given the robot is traveling on the course
+    When it turns too dark for the robot
+    Then robot deactivates itself

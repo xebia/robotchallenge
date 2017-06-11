@@ -9,6 +9,12 @@ function Robot(board) {
   this.lightStatus = false;
   this.celebrating;
 
+  this.initialize = function(automatedLight,followline,finish) {
+    this.automatedLights = automatedLight;
+    this.followline = followline;
+    this.finish = finish;
+  };
+
   this.activate = function() {
     this.board.info("Robot", "Activate");
     this.leftMotor = new five.Motor(mbot.LEFT_MOTOR);
@@ -19,6 +25,10 @@ function Robot(board) {
     this.isActive = true;
     this.goForward();
     this.turnOffLights();
+
+    this.automatedLights.activate();
+    this.followline.activate();
+    this.finish.activate();
   };
 
   this.getState = function() {
@@ -64,6 +74,9 @@ function Robot(board) {
     this.move(0,0);
     this.leftMotor.stop();
     this.rightMotor.stop();
+    this.automatedLights.deactivate();
+    this.followline.deactivate();
+    this.finish.deactivate();
     this.isActive = false;
   };
 

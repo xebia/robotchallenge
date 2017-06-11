@@ -12,8 +12,10 @@ var finish = require("./modules/finish");
 board.on("ready", function(){
   this.robot = new Robot(board);
 
-  followLine.initialize(this.robot);
   automatedLight.initialize(this.robot);
+  followLine.initialize(this.robot);
   finish.initialize(this.robot);
   startButton.initialize(this.robot);
+
+  this.robot.initialize(automatedLight,followLine,finish);
 });

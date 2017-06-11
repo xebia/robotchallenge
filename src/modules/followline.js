@@ -7,6 +7,7 @@ var isActive, l_line, r_line, accelerateRotation;
 const tolerance = 2;
 
 var sensorChange = function(pos,value, robot) {
+
   if (!isActive) return;
   if (value !== 0 && value !== 1) throw new Error("no correct value found");
   if (pos !== 'right' && pos !== 'left') throw new Error("direction must be left or right");

@@ -1,7 +1,6 @@
 /* dependencies */
 var mbot = require("../mbotlayout");
 var five = require("johnny-five");
-var followLine = require("./followline");
 
 /* private variables */
 var isActive;
@@ -21,8 +20,7 @@ var sensorChange = function(value, robot) {
 
   if (value < PieInYourPantstolerance) {
     console.log('I.. a...m... scared...');
-    followLine.deactivate();
-    robot.move(0,0);
+    robot.stop();
   }
 }
 
