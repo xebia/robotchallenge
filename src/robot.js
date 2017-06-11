@@ -25,7 +25,7 @@ function Robot(board) {
     this.leds = new pixel.Strip(mbotStrip);
     this.isActive = true;
     this.goForward();
-    //this.turnOffLights();
+    this.turnOffLights();
 
     this.automatedLights.activate();
     this.followline.activate();
