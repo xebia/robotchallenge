@@ -8,6 +8,7 @@ function Robot(board) {
   this.isActive = false;
   this.lightStatus = false;
   this.celebrating;
+  this.leds;
 
   this.initialize = function(automatedLight,followline,finish) {
     this.automatedLights = automatedLight;
@@ -24,7 +25,7 @@ function Robot(board) {
     this.leds = new pixel.Strip(mbotStrip);
     this.isActive = true;
     this.goForward();
-    this.turnOffLights();
+    //this.turnOffLights();
 
     this.automatedLights.activate();
     this.followline.activate();
@@ -83,9 +84,7 @@ function Robot(board) {
   this.turnOnLights = function() {
     this.leds.color("#ffffff");
     this.leds.show();
-    lightOnTimer = setTimeout(function() {
-      this.lightStatus = true;
-    },200);
+    this.lightStatus = true;
   };
 
   this.turnOffLights = function() {
