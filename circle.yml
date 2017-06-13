@@ -1,6 +1,7 @@
 ## Customize test commands
 test:
   override:
-    - npm test
+    - npm run unit-test
+    - npm run acceptance-test
   post:
-    - npm run cucumber
+    - npm run coverage
