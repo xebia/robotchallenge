@@ -4,8 +4,8 @@ var board = new five.Board({port: process.argv[2]});
 var Robot = require("./robot");
 var startbutton = require("./modules/start");
 var followline = require("./modules/followline");
-var lights = require("./modules/lights");
 var finish = require("./modules/finish");
+var lights = require("./modules/lights");
 
 board.on("ready", function(){
   this.robot = new Robot(board);
