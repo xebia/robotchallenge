@@ -11,7 +11,6 @@ function Robot(board) {
   setTimeout(() => {
     this.leftMotor = new five.Motor(mbot.LEFT_MOTOR);
     this.rightMotor = new five.Motor(mbot.RIGHT_MOTOR);
-    
   }, 2000);
   
   this.log = function(message) {
@@ -27,7 +26,7 @@ function Robot(board) {
     var mbotStrip = mbot.LEDS;
     mbotStrip.board = board;
     this.leds = new pixel.Strip(mbotStrip);
-  }
+  };
 
   this.goForward = function() {
     this.move(SPEED, SPEED);

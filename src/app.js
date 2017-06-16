@@ -4,7 +4,6 @@ var board = new five.Board({port: process.argv[2]});
 var Robot = require("./robot");
 var startbutton = require("./modules/start");
 var followline = require("./modules/followline");
-var lights = require("./modules/lights");
 var finish = require("./modules/finish");
 
 board.on("ready", function(){
@@ -13,5 +12,4 @@ board.on("ready", function(){
   startbutton.initialize(this.robot);
   followline.initialize(this.robot);
   finish.initialize(this.robot);
-  lights.initialize(this.robot);
 });
