@@ -8,10 +8,12 @@ function Robot(board) {
   this.board = board;
   this.isActive = false;
 
+  var adjustedSpeed = SPEED;
+  
   setTimeout(() => {
     this.leftMotor = new five.Motor(mbot.LEFT_MOTOR);
     this.rightMotor = new five.Motor(mbot.RIGHT_MOTOR);
-  }, 2000);
+  }, 2);
   
   this.log = function(message) {
     this.board.info("Human", message);
@@ -29,17 +31,20 @@ function Robot(board) {
   };
 
   this.goForward = function() {
-    this.move(SPEED, SPEED);
+    adjustedSpeed = adjustedSpeed + SPEED*0.01; // Reset speed after corner adjust;
+    this.move(adjustedSpeed, adjustedSpeed);
     this.board.info("Robot", "Move forward");
   };
 
   this.goLeft = function(sharpness) {
-    this.move(this.cornerSpeed(sharpness), SPEED);
+    adjustedSpeed = adjustedSpeed - SPEED*0.01; // Adjust speed for corner;
+    this.move(this.cornerSpeed(sharpness), adjustedSpeed);
     this.board.info("Robot", "Move left");
   };
 
   this.goRight = function(sharpness) {
-    this.move(SPEED, this.cornerSpeed(sharpness));
+    adjustedSpeed = adjustedSpeed - SPEED*0.01; // Adjust speed for corner;
+    this.move(adjustedSpeed, this.cornerSpeed(sharpness));
     this.board.info("Robot", "Move right");
   };
 
@@ -65,9 +70,9 @@ function Robot(board) {
 
   this.setLeftMotorSpeed = function(speed) {
     if (speed >= 0) {
-      this.leftMotor.reverse(speed);
+      this.leftMotor.forward(speed);
     } else {
-      this.leftMotor.forward(Math.abs(speed));
+      this.leftMotor.reverse(Math.abs(speed));
     }
   };
 

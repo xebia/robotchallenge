@@ -16,6 +16,7 @@ module.exports = {
 
   PROXIMITY_SENSOR: {
     controller: "HCSR04",
-    pin: "A3"
+    pin: "A3",
+    freq: 3000
   }
 };

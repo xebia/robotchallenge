@@ -13,7 +13,7 @@ function listenForStartButtonPress(robot) {
     startButton.on("change", function() {
       activateAndMoveForward(robot);
     });
-  }, 2000);
+  }, 2);
 }
 
 function initialize(robot) {
