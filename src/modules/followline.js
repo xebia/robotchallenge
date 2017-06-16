@@ -1,104 +1,104 @@
-/* dependencies */
 var mbot = require("../mbotlayout");
 var five = require("johnny-five");
 
-/* private variables */
-var isActive, l_line, r_line, accelerateRotation;
-const tolerance = 2;
+var DEFAULT_CORNER_SHARPNESS = 0.2;
+var SEARCH_LINE_MAX_TRIES = 25; // Each try is 0.05 seconds.
 
-var sensorChange = function(pos,value, robot) {
+var robot;
+var leftLineSensor, rightLineSensor;
+var sensingLineOnLeft = true;
+var sensingLineOnRight = true;
+var lastCornerRight = true;
 
-  if (!isActive) return;
-  if (value !== 0 && value !== 1) throw new Error("no correct value found");
-  if (pos !== 'right' && pos !== 'left') throw new Error("direction must be left or right");
+function adjustRight(sharpness) {
+  lastCornerRight = true;
+  robot.goRight(sharpness);
+}
 
-  switch(pos) {
-    case "right":
-      if (value == 0) r_line = true;
-      else r_line = false;
-      break;
-    case "left":
-      if (value == 0) l_line = true;
-      else l_line = false;
-      break;
-  }
+function adjustLeft(sharpness) {
+  lastCornerRight = false;
+  robot.goLeft(sharpness);
+}
 
-  if ((l_line || r_line) && accelerateRotation) {
-    clearInterval(accelerateRotation);
-  }
-  if (!l_line && r_line) {
-    adjust("right", robot);
-  } else if (!r_line && l_line) {
-    adjust("left", robot);
-  } else if (r_line && l_line) {
-    continueStraight(robot);
+function inSharpCorner() {
+  return !(sensingLineOnRight || sensingLineOnLeft);
+}
+
+function _tryBothDirections(firstDirection, secondDirection, tries, sharpness) {
+  if (tries < SEARCH_LINE_MAX_TRIES) {
+    firstDirection(sharpness);
+    setTimeout(() => {
+      if (inSharpCorner()) {
+        var increasedSharpness = (sharpness < 0.95) ? sharpness + 0.05 : 1.0;
+        _tryBothDirections(firstDirection, secondDirection, tries+1, increasedSharpness);
+      }
+    }, 50);
+  } else {
+    secondDirection(sharpness);
   }
 }
 
-/* exported object */
+function tryBothDirections(firstDirection, secondDirection) {
+  _tryBothDirections(firstDirection, secondDirection, 0, DEFAULT_CORNER_SHARPNESS);
+}
+
+function searchLine() {
+  if (lastCornerRight) {
+    tryBothDirections(adjustRight, adjustLeft);
+  } else {
+    tryBothDirections(adjustLeft, adjustRight);
+  }
+}
+
+function changeDirection() {
+  if (sensingLineOnRight && sensingLineOnLeft) {
+    robot.goForward();
+  } else if (sensingLineOnRight) {
+    adjustRight(DEFAULT_CORNER_SHARPNESS);
+  } else if (sensingLineOnLeft) {
+    adjustLeft(DEFAULT_CORNER_SHARPNESS);
+  } else {
+    searchLine();
+  }
+}
+
+function rightSensorChange(value) {
+  sensingLineOnRight = (value === 0);
+}
+
+function leftSensorChange(value) {
+  sensingLineOnLeft = (value === 0);
+}
+
+function listenForLineSensorChanges() {
+  setTimeout(() => {
+    rightLineSensor.on("change", function() {
+      rightSensorChange(this.value);
+      changeDirection();
+    });
+    leftLineSensor.on("change", function() {
+      leftSensorChange(this.value);
+      changeDirection();
+    });
+  },2000);
+}
+
+function setRobot(x) {
+  robot = x;
+}
+
+function initialize(robot) {
+  leftLineSensor = new five.Sensor.Digital(mbot.LEFT_LINE_SENSOR);
+  rightLineSensor = new five.Sensor.Digital(mbot.RIGHT_LINE_SENSOR);
+  setRobot(robot);
+  listenForLineSensorChanges();
+}
+
 module.exports = {
-  initialize: function(robot) {
-    isActive = false;
-    l_line = true;
-    r_line = true;
-
-    var l_sensor = new five.Sensor.Digital(mbot.LEFT_LINE_SENSOR);
-    var r_sensor = new five.Sensor.Digital(mbot.RIGHT_LINE_SENSOR);
-
-    r_sensor.on("change", function() {
-      sensorChange("right",this.value, robot);
-    });
-
-    l_sensor.on("change", function() {
-      sensorChange("left",this.value, robot);
-    });
-  },
-  activate: function() {
-    isActive = true;
-  },
-  deactivate: function() {
-    if (accelerateRotation) {
-      clearInterval(accelerateRotation);
-    }
-    isActive = false;
-  },
-  sensorChange: sensorChange
-}
-
-/* private functions */
-var adjust = function(direction, robot) {
-  var turnWheelFactor = 0.75;
-  var iteration = 0;
-  var oppositeDirection = (direction == "left")? "right" : "left";
-  var robot = robot;
-
-  lookForLine(direction,turnWheelFactor, robot);
-
-  accelerateRotation = setInterval(function() {
-    if (turnWheelFactor > -1) {
-      turnWheelFactor-= 0.25;
-    }
-
-    iteration++;
-    if (iteration <= 12) {
-      lookForLine(direction,turnWheelFactor, robot);
-    } else {
-      lookForLine(oppositeDirection,turnWheelFactor, robot);
-    }
-  },100)
-}
-
-var lookForLine = function(direction,turnWheelFactor, robot) { 
-  switch(direction) {
-    case "right":
-      robot.move(1,turnWheelFactor);
-      break;
-    case "left":
-      robot.move(turnWheelFactor,1);
-      break;
-  }
-}
-
-function continueStraight(robot) {
-  robot.move(1,1);
-}
+  initialize,
+  setRobot,
+  rightSensorChange,
+  leftSensorChange,
+  changeDirection,
+  inSharpCorner
+};

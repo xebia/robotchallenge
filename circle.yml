@@ -1,7 +1,9 @@
-## Customize test commands
+machine:
+  node:
+    version: 4.6.0
+
 test:
   override:
-    - npm run unit-test
-    - npm run acceptance-test
+    - npm test
   post:
     - npm run coverage

@@ -1,5 +1,3 @@
-///var components = require("node-constants")(exports);
-
 module.exports = {
   RIGHT_MOTOR: { pins: { pwm: 5, dir: 4 } },
   LEFT_MOTOR: { pins: { pwm: 6, dir: 7 } },
@@ -9,7 +7,7 @@ module.exports = {
 
   BUTTON: { pin: "A7", mode: 0 },
 
-  LIGHT_SENSOR: {pin: "A6", freq: 10, threshold: 25 },
+  LIGHT_SENSOR: {pin: "A6", freq: 200, threshold: 25 },
 
   LEDS: {
     strips: [{pin: 13, length: 2}],

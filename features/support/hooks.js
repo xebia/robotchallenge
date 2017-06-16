@@ -1,37 +1,29 @@
 /* SHARED OBJECTS */
 
+var Robot = require("../../src/robot");
+
 var myHooks = function () {
   this.Before(function (scenario) {
-    var Robot = require("../../src/robot");
-    this.startButton = require("../../src/modules/startbutton");
-    this.followLine = require("../../src/modules/followline");
-    this.automatedLight = require("../../src/modules/automatedlight");
+    this.start = require("../../src/modules/start");
+    this.followline = require("../../src/modules/followline");
+    this.lights = require("../../src/modules/lights"); 
     this.finish = require("../../src/modules/finish");
 
+    //constructing robot
     this.robot = new Robot(this.board);
-    this.followLine.initialize(this.robot);
-    this.automatedLight.initialize(this.robot);
-    this.finish.initialize(this.robot);
-    this.startButton.initialize(this.robot);
-
-    this.robot.initialize(this.automatedLight,this.followLine,this.finish);
 
     //specifying spies that are used in multiple specs
-    this.moveSpy = this.sandbox.spy(this.robot, "move");
-    this.leftWheelSpy = this.sandbox.spy(this.robot, "left");
-    this.rightWheelSpy = this.sandbox.spy(this.robot, "right");
-    this.moveForwardSpy = this.sandbox.spy(this.robot, "goForward");
+    this.goForwardSpy = this.sandbox.spy(this.robot, "goForward");
+    this.goLeftSpy = this.sandbox.spy(this.robot, "goLeft");
+    this.goRightSpy = this.sandbox.spy(this.robot, "goRight");
+    this.lightsOnSpy = this.sandbox.spy(this.robot, "turnOnLights");
+    this.lightsOffSpy = this.sandbox.spy(this.robot, "turnOffLights");
     this.stopSpy = this.sandbox.spy(this.robot, "stop");
-    this.lightOnSpy = this.sandbox.spy(this.robot, "turnOnLights");
-    this.celebrateSpy = this.sandbox.spy(this.robot, "celebrate");
-    this.lightOffSpy = this.sandbox.spy(this.robot, "turnOffLights");
-    this.followLineOffSpy = this.sandbox.spy(this.followLine, "deactivate");
   });
 
   this.After(function (scenario) {
-    this.followLine.deactivate();
     this.sandbox.restore();
-  })
+  });
 };
 
 module.exports = myHooks;
