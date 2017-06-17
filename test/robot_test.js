@@ -26,7 +26,7 @@ describe("the robot", function(){
 
   it("will go forward when asked", function() {
     this.robot.goForward();
-    assert(this.moveSpy.withArgs(100,100).calledOnce, "robot has not moved forward correctly");
+    assert(this.moveSpy.withArgs(101,101).calledOnce, "robot has not moved forward correctly");
   });
 
   it("will go left when asked", function() {
@@ -36,7 +36,7 @@ describe("the robot", function(){
 
   it("will go right when asked", function() {
     this.robot.goRight(0.2);
-    assert(this.moveSpy.withArgs(100,60).calledOnce, "robot has not moved right correctly");
+    assert(this.moveSpy.withArgs(99,60).calledOnce, "robot has not moved right correctly");
   });
 
   it("will become inactive when stopped", function() {
