@@ -1,5 +1,5 @@
-# TestMasterBot 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2d281718a703484cb933ea175b15e800)](https://www.codacy.com/app/XTA/TestMasterBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xebia/TestMasterBot&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/2d281718a703484cb933ea175b15e800)](https://www.codacy.com/app/XTA/TestMasterBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xebia/TestMasterBot&amp;utm_campaign=Badge_Coverage)
+# Robot Challenge 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e9f8371f5a64e6fa5e4b24df7fd6cd5)](https://www.codacy.com/app/XTA/robotchallenge?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xebia/robotchallenge&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/3e9f8371f5a64e6fa5e4b24df7fd6cd5)](https://www.codacy.com/app/XTA/robotchallenge?utm_source=github.com&utm_medium=referral&utm_content=xebia/robotchallenge&utm_campaign=Badge_Coverage)
 
 ### Getting started
 
@@ -24,12 +24,12 @@
 ### Download project and install project dependencies:
 
 1. Clone repository from github, open a commandline or terminal and use the following command:
-* git clone https://github.com/xebia/TestMasterBot.git
+* git clone https://github.com/xebia/robotchallenge.git
 
 2. While still in your terminal go into the project and install the dependencies
 
 ```
-cd TestMasterBot
+cd robotchallenge
 npm install
 ```
 
