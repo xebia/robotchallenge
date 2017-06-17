@@ -20,4 +20,4 @@ module.exports = function() {
         assert(this.stopSpy.callCount === 0, "Stop was called before the finish.");
         done();
     });
-}
+};

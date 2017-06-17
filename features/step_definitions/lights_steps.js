@@ -34,5 +34,4 @@ module.exports = function() {
         assert(this.lightsOffSpy.callCount >= 1, "Lights-off not called");
         done();
     });
-
-}
+};
